@@ -1,0 +1,22 @@
+/* Appbar.css */
+
+.nav-tabs li {
+    background-color: #333;
+    color: white; /* Change this to your desired color */
+  }
+  
+  .nav-tabs li a {
+    color: white; /* Change this to the text color you prefer */
+  }
+  .fixed{
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  .divsetter{
+    position: fixed;
+  }
+  .nav-item a:hover{
+    background-color: #ccc;
+    color: #333;
+  }

@@ -1,0 +1,81 @@
+.col-sm-3{
+    color: white;
+    border: solid black 1px;
+}
+.col-sm-9{
+    background-color: white;
+}
+.full{
+    width: 100%;
+}
+h2{
+    text-align: start;
+}
+.content{
+    height: 100%;
+    position: relative;
+    width: 94%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);   
+    border-radius: 1%;
+    background: #333333;
+    color: white;
+}
+@media screen and (max-width: 810px) {
+    #section1, #section2, #section3, #section41, #section42  {
+      margin-left: 150px;
+    }
+  }
+  .content h1{
+    text-align: center;
+    
+    padding-bottom: 50px;
+  }
+  .bottom{
+    padding-bottom: 100px;
+  }
+  .custom{
+    margin-top: 25%;
+  }
+  .fix
+  {
+   
+  }
+  .mbody{
+    background-color: white;
+  }
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  .dropdown-content a {
+    position: relative;
+    background-color: white;
+    color:inherit;
+
+    padding: 10px 12px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+  }
+  .dropdown-content a:hover{
+    background-color: #ddd;
+  }
+  .dropdown-content  {
+    position: absolute;
+    overflow: auto;
+    z-index: 1;
+  }
+    
+  nav{
+    color: black;
+    background-color: white;
+  }
+  .black{
+    color: black;
+  }
+  .row{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+  }
