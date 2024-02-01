@@ -76,14 +76,17 @@
 
 .search {
     position: fixed;
-    top: 15%;
+    top: 17.5%; /* Center vertically */
+    left: 50%; /* Center horizontally */
     width: 50%;
+    transform: translate(-50%, -50%); /* Center the element */
     outline: none;
     border: none;
     height: 40px;
-    margin-top: 25px;
-    border-radius: 6px;
+    margin-top: 25px; /* Adjust the top margin as needed */
+    border-radius: 6px; /* Keep your existing border-radius */
 }
+
 
 .divsep:hover {
     transform: scale(1.01);
