@@ -99,7 +99,7 @@ function Pending() {
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap"></link>
                 <h3 className=''>Existing activity</h3>
                 <div className="col-sm-10 dropdown-content">
-                    <input type="search" className="search" rows={5} id="pwd" placeholder="search activity" onChange={(event) => {
+                    <input type="search" className="search" rows={5} id="pwd" placeholder=" Search activity" onChange={(event) => {
                         console.log(event.target.value)
                         let newData = []
                         datalist.forEach(element => {

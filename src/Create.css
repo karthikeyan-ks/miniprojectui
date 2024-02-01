@@ -1,32 +1,64 @@
 .col-sm-3{
-    color: white;
-    border: solid black 1px;
+    color: #dae1ce;
+    border: solid #262b49 1px;
+    box-shadow: 0 1px 3px #dae1ce(0, 0, 0, 0.12), 0 1px 2px #dae1ce(0, 0, 0, 0.24);
+    border-radius: 1%;
+    
 }
 .col-sm-9{
-    background-color: white;
+    background-color: #dae1ce;
 }
 .full{
     width: 100%;
 }
 h2{
     text-align: start;
+    width: 100%;
 }
 .content{
     height: 100%;
     position: relative;
     width: 94%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);   
+    box-shadow: 0 1px 3px #dae1ce(0, 0, 0, 0.12), 0 1px 2px #dae1ce(0, 0, 0, 0.24);   
     border-radius: 1%;
-    background: #333333;
-    color: white;
+    background: #dae1ce;
+    color: #dae1ce;
 }
+
+
+/* Text Label in one line */
+.form-group .control-label {
+  /* Adjust the width according to your preference */
+  width: 100px;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+/* Text Box margin */
+
+.form-group .col-sm-10 input[type="text"] {
+    /* Adjust the width and margin accordingly */
+    width: calc(100% - 150px);
+    margin-left: 90px; /* Adjust the left margin as needed */
+}
+
+.form-group .col-sm-10 textarea {
+  /* Adjust the width and margin accordingly */
+  width: calc(100% - 150px);
+  margin-left: 90px; /* Adjust the left margin as needed */
+}
+
+
+
+
 @media screen and (max-width: 810px) {
     #section1, #section2, #section3, #section41, #section42  {
       margin-left: 150px;
+      font-size: 100px;
+      
     }
   }
   .content h1{
-    text-align: center;
+    text-align: left;
     
     padding-bottom: 50px;
   }
@@ -36,12 +68,8 @@ h2{
   .custom{
     margin-top: 25%;
   }
-  .fix
-  {
-   
-  }
   .mbody{
-    background-color: white;
+    background-color: #dae1ce;
   }
   .dropdown {
     position: relative;
@@ -49,7 +77,7 @@ h2{
   }
   .dropdown-content a {
     position: relative;
-    background-color: white;
+    background-color: #dae1ce;
     color:inherit;
 
     padding: 10px 12px;
@@ -58,7 +86,7 @@ h2{
     flex-direction: row;
   }
   .dropdown-content a:hover{
-    background-color: #ddd;
+    background-color: #dae1ce;
   }
   .dropdown-content  {
     position: absolute;
@@ -67,11 +95,13 @@ h2{
   }
     
   nav{
-    color: black;
-    background-color: white;
+    color:  #dae1ce;
+    background-color: #262b49;
   }
   .black{
-    color: black;
+    color:  #262b49;
+    
+    
   }
   .row{
     display: flex;
@@ -79,3 +109,10 @@ h2{
     width: 100%;
     justify-content: space-evenly;
   }
+h3{
+  text-align: left;
+  
+}
+.a{
+  color: #dae1ce;
+}

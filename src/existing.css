@@ -6,7 +6,7 @@
     flex-direction: column;
     background-color: white;
     width: 90%;
-    background: #333333;
+    background: #262b49;
     color: white;
     border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -81,6 +81,8 @@
     outline: none;
     border: none;
     height: 40px;
+    margin-top: 25px;
+    border-radius: 6px;
 }
 
 .divsep:hover {
