@@ -26,7 +26,7 @@ const LoginPage = ({ onLogin ,progress }) => {
   const handleLogin = (event) => {
     if (username !== '' && password !== '') {
       console.log("click event working... ")
-      setMessage({ 'auth': 'auth', 'username': username, 'password': password })
+      handleMessageSocket(1);
       console.log(message)
     } else {
       setError('Invalid username or password');

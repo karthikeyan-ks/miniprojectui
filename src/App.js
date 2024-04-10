@@ -8,19 +8,20 @@ import Issued from './Issued';
 import Pending from './Pending';
 import Review from './Review';
 import Appbar from './Appbar';
-import ProgressBar from './components/ProgressBar';
-import SkeletonLoad from './components/Skeletion';
+import Skeleton from '@mui/material/Skeleton'; // Import Skeleton from @mui/material
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentPage, setCurrentPage] = useState('existing');
-    const [isLoading, setIsLoading] = useState(false); // State to track loading status
-    const [progress,setProgress]=useState(0)
+    const [isLoading, setIsLoading] = useState(false); // Initialize as false
+    const [progress, setProgress] = useState(0);
+
     const handleLogin = () => {
-        console.log("loading handlelogin...")
-      setTimeout(()=>{
-        setIsLoggedIn(true);
-      },1000)  
+        setIsLoading(true); // Start loading when login process starts
+        setTimeout(() => {
+            setIsLoggedIn(true);
+            setIsLoading(false); // Set loading to false once login is successful
+        }, 1000);
     };
 
     const navigateTo = (page) => {
@@ -28,41 +29,45 @@ function App() {
     };
 
     useEffect(() => {
-        setIsLoading(true);
         const fetchData = async () => {
             try {
-                setIsLoading(false);
+                // Simulate fetching data
+                setIsLoading(true); // Start loading
+                setTimeout(() => {
+                    setIsLoading(false); // Set loading to false after data is fetched
+                }, 1000);
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setIsLoading(false);
             }
         };
         fetchData();
-    }, [currentPage]); 
-    
-    const handleProgress=(val)=>{
-      setProgress(val)
-    }
-    const con=()=>{
-      console.log("loading....")
-    }
+    }, [currentPage]);
+
+    const handleProgress = (val) => {
+        setProgress(val);
+    };
+
     return (
         <Router>
             <div>
-            <ProgressBar progress={progress}/>
-            {isLoggedIn && <Appbar navigateTo={navigateTo} progress={handleProgress} />} 
+                {isLoggedIn && <Appbar navigateTo={navigateTo} progress={handleProgress} />}
                 <div className="App-content">
-                 
                     {isLoading ? (
-                        <SkeletonLoad/>
+                        <>
+                            <Skeleton animation="wave" width={200} height={40} />
+                            <Skeleton animation="wave" variant="rectangular" width={300} height={200} />
+                            <Skeleton animation="wave" variant="rectangular" width={300} height={200} />
+                            <Skeleton animation="wave" variant="rectangular" width={300} height={200} />
+                        </>
                     ) : (
                         isLoggedIn ? (
                             <>
                                 {currentPage === 'home' && <Home progress={handleProgress} />}
-                                {currentPage === 'create' && <Create progress={handleProgress}/>}
+                                {currentPage === 'create' && <Create progress={handleProgress} />}
                                 {currentPage === 'existing' && <Existing progress={handleProgress} />}
                                 {currentPage === 'issued' && <Issued progress={handleProgress} />}
-                                {currentPage === 'pending' && <Pending  />}
+                                {currentPage === 'pending' && <Pending />}
                                 {currentPage === 'review' && <Review />}
                             </>
                         ) : (
@@ -72,7 +77,7 @@ function App() {
                 </div>
             </div>
         </Router>
-    )    
+    )
 }
 
 export default App;
