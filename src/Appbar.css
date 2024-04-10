@@ -1,23 +1,167 @@
 /* Appbar.css */
 
 .nav-tabs li {
-    background-color: #262b49;
-    color:  #dae1ce;
-     /* Change this to your desired color */
-  }
-  
-  .nav-tabs li a {
-    color: #dae1ce; /* Change this to the text color you prefer */
-  }
-  .fixed{
-    position: fixed;
-    top: 0;
-    width: 100%;
-  }
-  .divsetter{
-    position: fixed;
-  }
-  .nav-item a:hover{
-    background-color: #dae1ce;
-    color: #262b49;
-  }
+  background-color: #262b49;
+  color: #dae1ce;
+  cursor: pointer;
+  /* Change this to your desired color */
+}
+
+.navbar {
+  /*background:#2196f3;*/
+  background: white;
+  display: block;
+}
+
+nav .custom-logo {
+  color: black;
+}
+
+.logo {
+  min-width: 30%;
+  padding-left: 10px;
+  color: black;
+}
+
+.icons {
+  min-width: 20%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-self:end;
+}
+.menuDiv{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.icon {
+  margin: 10px;
+  color: black;
+}
+
+.nav-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+nav .nav-wrapper ul {
+  width: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+
+.a {
+  color: black;
+  /* Change this to the text color you prefer */
+  text-decoration: none;
+  /* Underline the text */
+  cursor: pointer;
+}
+
+.a:hover {
+  text-decoration: none;
+}
+
+.fixed {
+  position: relative;
+  top: 0;
+
+  width: 100%;
+}
+
+.divsetter {
+  position: fixed;
+}
+
+.nav-item a:hover {
+  background-color: #dae1ce;
+  color: #262b49;
+}
+
+.App-header h3 {
+  letter-spacing: 0.1em;
+  color: #eee;
+}
+
+h3 {
+  color: #FFF;
+}
+
+li {
+  color: #FFF;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+.menu {
+  position: absolute;
+  top: 110%;
+  /* Position the menu just below the menu button */
+  box-sizing: border-box;
+  /* Align the menu with the left edge of the menu button */
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  z-index: 1000;
+}
+.menu::after {
+  content: '';
+  position: absolute;
+  top: -13.5%; /* Adjust the position of the triangle as needed */
+  left: 10px;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  z-index: 9000;
+  border-bottom-color: #fff; /* Color of the triangle */
+}
+
+.menu p {
+  color: black;
+  right: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 2px;
+  padding-top:0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+}
+
+.menu p:hover {
+  background: #262b49;
+  color: white;
+}
+
+.menu p:active {
+  transform: scale(1.01);
+}
+
+.form3 {
+  width: 25%;
+  height: 40px;
+  margin-left: 75%;
+}
+
+.form3 input[type='search'] {
+  position: relative;
+  width: 100%;
+  z-index: 10;
+  height: 100%;
+  border-radius: 10px;
+  background: white;
+  color: black;
+}
+
+.form3 input[type='search']::placeholder {
+  color: gray
+}
+
+img {
+  border-radius: 50%;
+}

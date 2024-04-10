@@ -26,9 +26,7 @@ h2{
 }
 
 
-/* Text Label in one line */
 .form-group .control-label {
-  /* Adjust the width according to your preference */
   width: 100px;
   white-space: nowrap; /* Prevent text from wrapping */
 }
@@ -115,4 +113,7 @@ h3{
 }
 .a{
   color: #dae1ce;
+}
+.h4{
+  color: white;
 }

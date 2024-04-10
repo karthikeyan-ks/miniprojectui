@@ -6,10 +6,10 @@
     flex-direction: column;
     background-color: white;
     width: 90%;
+    height: fit-content;
     background: #262b49;
     color: white;
     border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .dropdown-content {
@@ -17,7 +17,6 @@
     align-items: center;
     justify-content: center;
     position: static;
-
 }
 
 .header {
@@ -34,8 +33,10 @@
     min-height: fit-content;
     text-align: start;
     padding-left: 10px;
-    position: static;
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
 }
 
 .footer {
@@ -57,7 +58,6 @@
 
 .space {
     padding-top: 50px;
-
 }
 
 .listexisting {
@@ -76,7 +76,6 @@
 
 .search {
     position: fixed;
-    top: 15%; /* Set the desired top position */
     left: 50%; /* Center horizontally */
     width: 50%;
     transform: translateX(-50%); /* Center the element horizontally */
@@ -106,4 +105,17 @@
 }
 .small{
     height: 100%;
+}
+.card{
+    color: #262b49;
+    width: 90%;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 2px;
+}
+.card:hover{
+    transform: scale(1.005);
+}
+.h5{
+    color: white;
 }
