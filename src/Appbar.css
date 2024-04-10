@@ -15,6 +15,7 @@
 
 nav .custom-logo {
   color: black;
+  font-weight: 300;
 }
 
 .logo {
@@ -27,8 +28,9 @@ nav .custom-logo {
   min-width: 20%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-self:end;
+  height: 100%;
 }
 .menuDiv{
   display: flex;
@@ -39,12 +41,13 @@ nav .custom-logo {
 .icon {
   margin: 10px;
   color: black;
+  height: 100%;
 }
 
 .nav-wrapper {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   width: 100%;
 }
 
@@ -60,6 +63,7 @@ nav .nav-wrapper ul {
   color: black;
   /* Change this to the text color you prefer */
   text-decoration: none;
+  font-weight: 400;
   /* Underline the text */
   cursor: pointer;
 }

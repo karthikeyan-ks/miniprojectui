@@ -4,7 +4,7 @@ import './Appbar.css'
 import { FaBars, FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function Appbar({ navigateTo,progress}) {
+function Appbar({ navigateTo, progress }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
 
@@ -26,41 +26,41 @@ function Appbar({ navigateTo,progress}) {
           <li >
             <Link onClick={() => {
               progress(100)
-              setTimeout(()=>{
+              setTimeout(() => {
                 console.log("navigating...")
                 navigateTo('existing')
                 progress(0)
-              },1000)
+              }, 1000)
             }} className="a" to="/existing">Existing</Link>
           </li>
           <li >
             <Link onClick={() => {
               progress(100)
-              setTimeout(()=>{
+              setTimeout(() => {
                 console.log("navigating...")
                 navigateTo('issued')
                 progress(0)
-              },1000)
+              }, 1000)
             }} className="a" to="/issued">Issued</Link>
           </li>
           <li >
             <Link onClick={() => {
               progress(100)
-              setTimeout(()=>{
+              setTimeout(() => {
                 console.log("navigating...")
                 navigateTo('pending')
                 progress(0)
-              },1000)
+              }, 1000)
             }} className="a" to="/pending">Pending</Link>
           </li>
           <li>
             <Link onClick={() => {
               progress(100)
-              setTimeout(()=>{
+              setTimeout(() => {
                 console.log("navigating...")
                 navigateTo('review')
                 progress(0)
-              },1000)
+              }, 1000)
             }} className="a" to="/review">Review</Link>
           </li>
         </ul>
@@ -79,13 +79,15 @@ function Appbar({ navigateTo,progress}) {
             <FaSearch onClick={toggleSearch} className='icon' id="search-btn" />
             {
               isSearchOpen && (
-                <form className='form3'>
-                  <input type="search" className='menu' name="search" id="search" placeholder='search here' />
+                <form className='menu'>
+                  <input type="search" name="search" id="search" placeholder='search here' />
                 </form>
               )
             }
           </div>
-          <img src="https://www.w3schools.com/howto/img_snow_wide.jpg" alt="" height={50} width={50} />
+          <div className='menuDiv'>
+            <img src="https://www.w3schools.com/howto/img_snow_wide.jpg" alt="" height={50} width={50} />
+          </div>
         </div>
       </div>
     </nav>

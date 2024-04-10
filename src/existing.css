@@ -109,13 +109,23 @@
 .card{
     color: #262b49;
     width: 90%;
-    padding: 20px;
+    padding: 10px;
+    padding-left: 20px;
     border-radius: 10px;
     margin: 2px;
+}
+.card p{
+    margin: 5px;
+}
+.card .card-footer{
+    margin-left: 10px;
 }
 .card:hover{
     transform: scale(1.005);
 }
 .h5{
+    color: black;
+}
+.h6{
     color: white;
 }

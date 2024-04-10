@@ -46,7 +46,7 @@ function Existing({progress}) {
     return (
         <div className="container-fluid">
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap" />
-            <h5 className='h5'>Existing activity</h5>
+            <h5 className='h6   '>Existing activity</h5>
             {list}
             <FloatingActionBar/>
         </div>
