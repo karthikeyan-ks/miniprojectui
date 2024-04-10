@@ -1,8 +1,24 @@
 import React, { useState } from 'react';
+import LinearProgress from '@mui/material/LinearProgress';
+import { createTheme } from '@mui/material';
 
-function ProgressBar({ progress }) {
+const BlackProgressBar = ({progress}) => {
+  console.log(progress)
   return (
-    <div 
+    <div >
+      <LinearProgress sx={{
+        background:'black',
+        opacity: progress>0 ? 1 : 0,
+        height: progress>0 ? "5px" : "0px"
+      }} variant="indeterminate" 
+      />
+    </div>
+  );
+};
+
+export default BlackProgressBar;
+/**
+ * <div 
       style={{
         width: '100%',
         backgroundColor: '#262b49',
@@ -22,7 +38,4 @@ function ProgressBar({ progress }) {
         }}
       ></div>
     </div>
-  );
-}
-
-export default ProgressBar;
+ */

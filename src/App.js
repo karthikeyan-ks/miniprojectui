@@ -9,13 +9,15 @@ import Pending from './Pending';
 import Review from './Review';
 import Appbar from './Appbar';
 import ProgressBar from './components/ProgressBar';
+import SkeletonLoad from './components/Skeletion';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentPage, setCurrentPage] = useState('existing');
     const [isLoading, setIsLoading] = useState(false); // State to track loading status
-
+    const [progress,setProgress]=useState(0)
     const handleLogin = () => {
+        console.log("loading handlelogin...")
       setTimeout(()=>{
         setIsLoggedIn(true);
       },1000)  
@@ -29,7 +31,6 @@ function App() {
         setIsLoading(true);
         const fetchData = async () => {
             try {
-                await fetchDataAsync();
                 setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -38,7 +39,7 @@ function App() {
         };
         fetchData();
     }, [currentPage]); 
-    const [progress,setProgress]=useState(0)
+    
     const handleProgress=(val)=>{
       setProgress(val)
     }
@@ -48,16 +49,14 @@ function App() {
     return (
         <Router>
             <div>
-            {isLoggedIn && <Appbar navigateTo={navigateTo} />} 
+            <ProgressBar progress={progress}/>
+            {isLoggedIn && <Appbar navigateTo={navigateTo} progress={handleProgress} />} 
                 <div className="App-content">
-                  <ProgressBar progress={progress}/>
+                 
                     {isLoading ? (
-                        <div>Loading...
-                          {con}
-                        </div>
+                        <SkeletonLoad/>
                     ) : (
                         isLoggedIn ? (
-                            // Conditional rendering based on currentPage state
                             <>
                                 {currentPage === 'home' && <Home progress={handleProgress} />}
                                 {currentPage === 'create' && <Create progress={handleProgress}/>}
@@ -73,17 +72,7 @@ function App() {
                 </div>
             </div>
         </Router>
-    );
-    async function fetchDataAsync() {
-      console.log("loading")
-      // Simulate fetching data from an API
-      const response = await fetch('https://api.example.com/data');
-      const data = await response.json();
-    
-      // Process the fetched data
-      return data;
-    }
-    
+    )    
 }
 
 export default App;

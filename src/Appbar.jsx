@@ -4,7 +4,7 @@ import './Appbar.css'
 import { FaBars, FaSearch, FaShoppingCart, FaUser } from 'react-icons/fa';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function Appbar({ navigateTo }) {
+function Appbar({ navigateTo,progress}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
 
@@ -24,16 +24,44 @@ function Appbar({ navigateTo }) {
         </div>
         <ul class="right hide-on-med-and-down">
           <li >
-            <Link onClick={() => { navigateTo('existing') }} className="a" to="/existing">Existing</Link>
+            <Link onClick={() => {
+              progress(100)
+              setTimeout(()=>{
+                console.log("navigating...")
+                navigateTo('existing')
+                progress(0)
+              },1000)
+            }} className="a" to="/existing">Existing</Link>
           </li>
           <li >
-            <Link onClick={() => navigateTo('issued')} className="a" to="/issued">Issued</Link>
+            <Link onClick={() => {
+              progress(100)
+              setTimeout(()=>{
+                console.log("navigating...")
+                navigateTo('issued')
+                progress(0)
+              },1000)
+            }} className="a" to="/issued">Issued</Link>
           </li>
           <li >
-            <Link onClick={() => navigateTo('pending')} className="a" to="/pending">Pending</Link>
+            <Link onClick={() => {
+              progress(100)
+              setTimeout(()=>{
+                console.log("navigating...")
+                navigateTo('pending')
+                progress(0)
+              },1000)
+            }} className="a" to="/pending">Pending</Link>
           </li>
           <li>
-            <Link onClick={() => navigateTo('review')} className="a" to="/review">Review</Link>
+            <Link onClick={() => {
+              progress(100)
+              setTimeout(()=>{
+                console.log("navigating...")
+                navigateTo('review')
+                progress(0)
+              },1000)
+            }} className="a" to="/review">Review</Link>
           </li>
         </ul>
         <div className="icons">
