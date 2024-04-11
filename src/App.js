@@ -10,6 +10,8 @@ import Review from './Review';
 import Appbar from './Appbar';
 import ProgressBar from './components/ProgressBar';
 import SkeletonLoad from './components/Skeletion';
+import MyTheme from './components/MyTheme';
+import { ThemeProvider } from '@mui/material';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -47,7 +49,8 @@ function App() {
       console.log("loading....")
     }
     return (
-        <Router>
+    <ThemeProvider theme={MyTheme}>
+         <Router>
             <div>
             <ProgressBar progress={progress}/>
             {isLoggedIn && <Appbar navigateTo={navigateTo} progress={handleProgress} />} 
@@ -72,6 +75,7 @@ function App() {
                 </div>
             </div>
         </Router>
+    </ThemeProvider>
     )    
 }
 

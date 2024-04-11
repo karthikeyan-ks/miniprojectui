@@ -3,7 +3,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { createTheme } from '@mui/material';
 
 const BlackProgressBar = ({progress}) => {
-  console.log(progress)
+  console.log("progress",progress)
   return (
     <div >
       <LinearProgress sx={{
