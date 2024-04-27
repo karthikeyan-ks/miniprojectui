@@ -4,7 +4,9 @@ const MyTheme = createTheme({
     palette: {
         primary: {
             main: '#007bff',
-            dark: '#007b00'
+            dark: '#007b00',
+            black:'#000000',
+            white:'#ffffff'
         },
         secondary: {
             main: '#ffc107',
@@ -61,6 +63,15 @@ const MyTheme = createTheme({
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     width: '100%'
+                }
+            }
+        },
+        MuiSkeleton:{
+            defaultProps:{
+                width:'90vw'
+            },styleOverrides:{
+                root:{
+
                 }
             }
         }

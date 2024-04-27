@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
-import 'materialize-css/dist/css/materialize.min.css';
 import WebSocketComponent from './websocketClient';
+import { Card, CardHeader } from 'react-bootstrap';
+import { Button, CardActions, CardContent, TextField, Typography } from '@mui/material';
 
-const LoginPage = ({ onLogin ,progress }) => {
+const LoginPage = ({ onLogin, progress }) => {
   const [userid, setUserId] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -16,16 +17,17 @@ const LoginPage = ({ onLogin ,progress }) => {
     progress(100)
     onLogin();
     console.log("progress set to 100")
-    if (message["usename"]!=="None"){
-      localStorage.setItem("username",message['username'])
-      localStorage.setItem("userid",message['userid'])
-    }else{
+    if (message["usename"] !== "None") {
+      localStorage.setItem("username", message['username'])
+      localStorage.setItem("userid", message['userid'])
+    } else {
       setError("invalid username or password")
     }
   };
   const handleLogin = (event) => {
     if (username !== '' && password !== '') {
       console.log("click event working... ")
+      //handleMessageSocket(1);
       setMessage({ 'auth': 'auth', 'username': username, 'password': password })
       console.log(message)
     } else {
@@ -42,24 +44,32 @@ const LoginPage = ({ onLogin ,progress }) => {
     <div className='container'>
       <WebSocketComponent handleMessage={handleMessageSocket} message={message} />
       <div className='form'>
-        <div className='head'>
-          <h4 className='h4'>Login</h4>
-        </div>
-        <div>
-          <label>User Id:</label>
-          <input type="number" value={userid} onChange={(e) => setUserId(e.target.value)} />
-        </div>
-        <div>
-          <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-        <button className='btn button waves-effect waves-light' onClick={handleLogin}>Login</button>
+        <Card
+          sx={{ mb: 2, width: "90%", padding: "0px", margin: "5px" }}
+        >
+          <CardHeader
+            sx={{ color: "primary.black", height: "100%", margin: "1px", display: "flex", justifyContent: "center" }}
+            title={"login"}
+          >
+            <Typography variant='h3' sx={{textAlign:"center",color:"primary.dark"}}>login</Typography>
+          </CardHeader>
+          <CardContent sx={{padding:"20px"}}>
+            <TextField label="Enter the username" type='text' sx={{padding:"10px",width:"100%"}} value={username} onChange={(e) => setUsername(e.target.value)}>
+
+            </TextField>
+            <TextField label="Enter your password" type='password' sx={{padding:"10px",width:"100%"}} value={password} onChange={(e) => setPassword(e.target.value)}>
+
+            </TextField>
+          </CardContent>
+          <CardActions>
+            <Button onClick={handleLogin} sx={{ width: "100%", bgcolor: "primary.dark", color: "primary.white" }}>
+              LOGIN
+            </Button>
+          </CardActions>
+        </Card>
+       
       </div>
+      {error && <div style={{ color: 'red' }}>{error}</div>}
     </div>
   );
 };

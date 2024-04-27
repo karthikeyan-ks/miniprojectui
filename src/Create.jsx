@@ -1,7 +1,6 @@
 import React from "react";
 import './App.css'
 import './Create.css'
-import 'materialize-css/dist/css/materialize.min.css';
 import FloatingActionBar from "./components/FloatingActionBar";
 
 function Create() {
