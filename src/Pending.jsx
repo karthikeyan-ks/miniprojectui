@@ -1,142 +1,120 @@
-import { React, useState, useEffect } from "react";
-import { ProgressBar } from "react-bootstrap";
-import './existing.css'
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardActions, Typography, IconButton, List, ListItem, Popper, Box, Fade } from "@mui/material";
+import { MoreVert, Restore, Delete } from "@mui/icons-material";
+import "./Pending.css";
+import FloatingActionBar from "./components/FloatingActionBar";
+import ProgressBar from "./components/ProgressBar"; // Importing ProgressBar component
+import BasicModal from "./components/Modal";
+import { Link } from "react-router-dom";
 
 function Pending() {
     const data = [
         {
             name: "Activity 1",
-            descritpion: "contains the description about the activty 1",
-            id: 1,
-            assigned: "employee 1",
-            assigneddob: "22-01-2022"
+            description: "Contains the description about the activity 1",
+            id: 1
         },
         {
             name: "Activity 2",
-            descritpion: "contains the description about the activty 2",
-            id: 2,
-            assigned: "employee 1",
-            assigneddob: "22-01-2022"
+            description: "Contains the description about the activity 2",
+            id: 2
         },
         {
             name: "Activity 3",
-            descritpion: "contains the description about the activty 3",
-            id: 3,
-            assigned: "employee 1",
-            assigneddob: "22-01-2022"
+            description: "Contains the description about the activity 3",
+            id: 3
         }
-        ,
-        {
-            name: "Activity 4",
-            descritpion: "contains the description about the activty 3",
-            id: 4,
-            assigned: "employee 1",
-            assigneddob: "22-01-2022"
+    ];
+
+    const [datalist, setDataList] = useState(data);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [popperStr, setPopperStr] = useState();
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleMouseEnter = (event) => {
+        setAnchorEl(event.currentTarget);
+        if (event.currentTarget.id === "1") {
+            setPopperStr("Reset the activity to inert state");
+        } else if (event.currentTarget.id === "2") {
+            setPopperStr("Delete the activity");
+        } else if (event.currentTarget.id === "3") {
+            setPopperStr("More options");
         }
-        ,
-        {
-            name: "Activity 5",
-            descritpion: "contains the description about the activty 3",
-            id: 5,
-            assigned: "employee 1",
-            assigneddob: "22-01-2022"
-        }
-    ]
-    const [datalist, setDataList] = useState(data)
+    };
+
+    const handleMouseLeave = () => {
+        setAnchorEl(null);
+    };
+
+    const handleCardClick = () => {
+        setOpenModal(!openModal);
+    };
+
     useEffect(() => {
-        const dataView1 = datalist.map(element =>
-            <div className='list-group-it' key={"1" + element.id}>
-                <div className="container divsep" key={"2" + element.id}>
-                    <div className="header" key={"3" + element.id}>
-                        <strong><h4 key={"4" + element.id}>{element.name}</h4></strong>
-                        <span key={"5" + element.id}>{element.id}</span>
-                    </div>
-                    <div className="body" key={"6" + element.id}><h4>{element.descritpion}</h4></div>
-                    <div className="footer" key={"7" + element.id}>
-                        <div>
-                            <strong> {element.assigned}</strong>
+        const dataView1 = datalist.map(item =>
+            <Card key={item.id} onClick={handleCardClick} sx={{ mb: 2, width: "90%", padding: "0px", margin: "5px" }} className="card">
+                <CardHeader
+                    sx={{ width: "fit-content", height: "100%", width: "100%", margin: "1px", display: "flex", justifyContent: "space-between" }}
+                    title={item.name}
+                    action={
+                        <IconButton id="3" aria-label="more actions" onClick={handleCardClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                            <MoreVert />
+                        </IconButton>
+                    }
+                />
+                <CardContent>
+                    <Typography variant="body2" sx={{ letterSpacing: "0.1rem", fontSize: "15px" }} fontFamily={'Roboto'} color="primary.black">
+                        {item.description}
+                    </Typography>
+                </CardContent>
+                <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <ProgressBar value={80} /> {/* Set ProgressBar value to 80% */}
+                    <List sx={{ display: "flex", flexDirection: "row" }}>
+                        <ListItem>
+                            <IconButton id="1" aria-label="restore" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                                <Restore />
+                            </IconButton>
+                        </ListItem>
+                        <ListItem>
+                            <IconButton id="2" aria-label="delete" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                                <Delete />
+                            </IconButton>
+                        </ListItem>
+                    </List>
+                </CardActions>
+                <Popper
+                    sx={{ zIndex: 1000 }}
+                    color="white"
+                    id={item.id}
+                    open={Boolean(anchorEl)}
+                    anchorEl={anchorEl}
+                    transition
+                >
+                    {({ TransitionProps }) => (
+                        <Fade {...TransitionProps} timeout={350}>
+                            <Box sx={{ zIndex: 1000, border: 1, p: 1, bgcolor: 'primary.black', color: 'primary.white' }}>
+                                {popperStr}
+                            </Box>
+                        </Fade>
+                    )}
+                </Popper>
+            </Card>
+        );
+        setList(dataView1);
+    }, [datalist, anchorEl, popperStr, openModal]);
 
-                        </div>
-                        <ProgressBar style={{height:"5px"}}  now={80} />
-                        <div>
-                            <strong>
-                                {element.assigneddob}
-                            </strong>
+    const [list, setList] = useState([]);
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-        setList(dataView1)
-    }, [datalist])
-
-    const dataView = datalist.map(element =>
-        <div className='list-group-it' key={"1" + element.id}>
-            <div className="container divsep" key={"2" + element.id}>
-                <div className="header" key={"3" + element.id}>
-                    <h4 key={"4" + element.id} >{element.name}</h4>
-                    <span key={"5" + element.id}>{element.id}</span>
-                </div>
-                <div className="body" key={"6" + element.id}>{element.descritpion}</div>
-                <div className="footer" key={"7" + element.id}>
-                    <div>
-                        {element.assigned}
-                    </div>
-                    <ProgressBar style={{height:"5px"}} now={80}/>
-
-                    <div>
-                        {element.assigneddob}
-                    </div>
-                </div>
-            </div>
-        </div >
-    )
-    const [list, setList] = useState(dataView)
     return (
         <div className="container-fluid">
-            <body data-spy="scroll" className='listexisting'>
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap"></link>
-                <h3 className=''>Existing activity</h3>
-                <div className="col-sm-10 dropdown-content">
-                    <input type="search" className="search" rows={5} id="pwd" placeholder=" Search activity" onChange={(event) => {
-                        console.log(event.target.value)
-                        let newData = []
-                        datalist.forEach(element => {
-                            console.log(element.name, element.name.includes(event.target.value))
-                            if (element.name.includes(event.target.value)) {
-                                newData.push(element)
-                            }
-                        });
-                        console.log(newData)
-                        if (event.target.value.length !== 0)
-                            setDataList(newData)
-                        else
-                            setDataList(data)
-                        console.log(list)
-                        const dataView = data.map(element =>
-                            <div className='list-group-it' key={"1" + element.id}>
-                                <div className="container divsep" key={"2" + element.id}>
-                                    <div className="header" key={"3" + element.id}>
-                                        <h4 key={"4" + element.id}>{element.name}</h4>
-                                        <span key={"5" + element.id}>{element.id}</span>
-                                    </div>
-                                    <div className="body" key={"6" + element.id}>{element.descritpion}</div>
-                                    <div className="footer" key={"7" + element.id}>
-                                        footer
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                        setList(dataView)
-                    }} />
-                </div>
-                <ul className='list-group space'>
-                    {list}
-                </ul>
-            </body>
-
-        </div >
-    )
+            <Link to={"https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"} />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap" />
+            <h5>Issued activity</h5>
+            {list}
+            <FloatingActionBar />
+            <BasicModal openModal={openModal} />
+        </div>
+    );
 }
-export default Pending
+
+export default Pending;
