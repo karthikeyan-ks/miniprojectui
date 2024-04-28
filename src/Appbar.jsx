@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Tab, Tabs, TextField, IconButton, Menu, MenuItem } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
@@ -111,15 +112,15 @@ function Appbar({ navigateTo, progress }) {
           >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
-            <MenuItem onClick={handleMenuClose}>History</MenuItem>
             <MenuItem onClick={() => {
               progress(100);
               setTimeout(() => {
                 console.log("navigating...");
-                navigateTo('existing');
+                navigateTo('History');
                 progress(0);
               }, 1000);
-            }}>Logout</MenuItem>
+            }}>History</MenuItem>
+            <MenuItem onClick={handleMenuClose}>logout</MenuItem>
           </Menu>
         </div>
       </Toolbar>

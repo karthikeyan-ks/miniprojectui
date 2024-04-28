@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardActions, Typography, IconButton, List, ListItem, Popper, Box, Fade } from "@mui/material";
 import { MoreVert, Restore, Delete } from "@mui/icons-material";
 import "./Pending.css";
 import FloatingActionBar from "./components/FloatingActionBar";
-import ProgressBar from "./components/ProgressBar"; // Importing ProgressBar component
 import BasicModal from "./components/Modal";
-import { Link } from "react-router-dom";
+const navigateTo = (History) => {
+    // Handle navigation using React Router
+    console.log("Navigating to:", History);
+};
 
 function Pending() {
     const data = [
@@ -29,7 +32,6 @@ function Pending() {
     const [datalist, setDataList] = useState(data);
     const [anchorEl, setAnchorEl] = useState(null);
     const [popperStr, setPopperStr] = useState();
-    const [openModal, setOpenModal] = useState(false);
 
     const handleMouseEnter = (event) => {
         setAnchorEl(event.currentTarget);
@@ -46,18 +48,19 @@ function Pending() {
         setAnchorEl(null);
     };
 
-    const handleCardClick = () => {
-        setOpenModal(!openModal);
+    const navigateToHistory = () => {
+        // Navigation logic to the 'History' page
+        console.log("Navigating to History page...");
     };
 
     useEffect(() => {
         const dataView1 = datalist.map(item =>
-            <Card key={item.id} onClick={handleCardClick} sx={{ mb: 2, width: "90%", padding: "0px", margin: "5px" }} className="card">
+            <Card key={item.id} sx={{ mb: 2, width: "90%", padding: "0px", margin: "5px" }} className="card">
                 <CardHeader
                     sx={{ width: "fit-content", height: "100%", width: "100%", margin: "1px", display: "flex", justifyContent: "space-between" }}
                     title={item.name}
                     action={
-                        <IconButton id="3" aria-label="more actions" onClick={handleCardClick} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                        <IconButton id="3" aria-label="more actions" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                             <MoreVert />
                         </IconButton>
                     }
@@ -68,7 +71,6 @@ function Pending() {
                     </Typography>
                 </CardContent>
                 <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <ProgressBar value={80} /> {/* Set ProgressBar value to 80% */}
                     <List sx={{ display: "flex", flexDirection: "row" }}>
                         <ListItem>
                             <IconButton id="1" aria-label="restore" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -101,7 +103,7 @@ function Pending() {
             </Card>
         );
         setList(dataView1);
-    }, [datalist, anchorEl, popperStr, openModal]);
+    }, [datalist, anchorEl, popperStr]);
 
     const [list, setList] = useState([]);
 
@@ -111,8 +113,8 @@ function Pending() {
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap" />
             <h5>Issued activity</h5>
             {list}
-            <FloatingActionBar />
-            <BasicModal openModal={openModal} />
+            <FloatingActionBar navigateTo={navigateTo} />
+            <BasicModal />
         </div>
     );
 }

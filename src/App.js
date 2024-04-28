@@ -8,6 +8,7 @@ import Issued from './Issued';
 import Pending from './Pending';
 import Review from './Review';
 import Appbar from './Appbar';
+import History from './History';
 import ProgressBar from './components/ProgressBar';
 import Skeleton from '@mui/material/Skeleton'
 import MyTheme from './components/MyTheme';
@@ -74,6 +75,7 @@ function App() {
                                 {currentPage === 'issued' && <Issued progress={handleProgress} />}
                                 {currentPage === 'pending' && <Pending />}
                                 {currentPage === 'review' && <Review />}
+                                {currentPage === 'History' && <History progress={handleProgress} />}
                             </>
                         ) : (
                             <LoginPage onLogin={handleLogin} progress={handleProgress} />

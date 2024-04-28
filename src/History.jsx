@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardActions, Typography, Menu, MenuItem } from "@mui/material";
-import "./existing.css";
+import "./History.css";
 import './App.css';
 import FloatingActionBar from "./components/FloatingActionBar";
 import ProgressBar from "./components/ProgressBar";
@@ -14,8 +14,7 @@ const navigateTo = (History) => {
     console.log("Navigating to:", History);
 };
 
-
-function Existing() {
+function History() {
     const data = [
         {
             name: "Activity 1",
@@ -61,8 +60,7 @@ function Existing() {
         console.log("mouseLeaves", open)
     };
     const handleCardClick = () => {
-        setOpenModal(!openModal)
-        console.log(openModal)
+        
     }
     const canBeOpen = open && Boolean(anchorEl);
     const id = canBeOpen ? 'spring-popper' : undefined;
@@ -88,14 +86,7 @@ function Existing() {
                 <CardActions sx={{ display: 'flex', justifyContent: 'flex-start' }}>
                     <List sx={{ display: "flex", flexDirection: "row" }}>
                         <ListItem>
-                            <IconButton id="1" aria-label="restore" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                                <Restore />
-                            </IconButton>
-                        </ListItem>
-                        <ListItem>
-                            <IconButton id="2" aria-label="delete" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                                <Delete />
-                            </IconButton>
+                           
                         </ListItem>
                     </List>
                 </CardActions>
@@ -127,7 +118,7 @@ function Existing() {
         <div className="container-fluid">
             <Link to={"https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"} />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap" />
-            <h5 >Existing activity</h5>
+            <h5 >History </h5>
             {list}
             <FloatingActionBar navigateTo={navigateTo} />
             <BasicModal openModal={openModal} />
@@ -135,4 +126,4 @@ function Existing() {
     );
 }
 
-export default Existing;
+export default History;

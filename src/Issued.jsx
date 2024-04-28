@@ -9,6 +9,10 @@ import ListItemText from "@mui/material/ListItemText";
 import { ChangeCircle, Delete, MenuBook, MoreVert, Restore } from "@mui/icons-material";
 import BasicModal from "./components/Modal";
 import { Link } from "react-router-dom";
+const navigateTo = (History) => {
+    // Handle navigation using React Router
+    console.log("Navigating to:", History);
+};
 
 function Existing() {
     const data = [
@@ -124,7 +128,7 @@ function Existing() {
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i&display=swap" />
             <h5 >Issued activity</h5>
             {list}
-            <FloatingActionBar />
+            <FloatingActionBar navigateTo={navigateTo} />
             <BasicModal openModal={openModal} />
         </div>
     );

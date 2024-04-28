@@ -1,0 +1,131 @@
+.divsep {
+    position: static;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
+    width: 90%;
+    height: fit-content;
+    background: #fbfbfb;
+    color: white;
+    border-radius: 10px;
+}
+
+.dropdown-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: static;
+}
+
+.header {
+    width: 100%;
+    min-height: fit-content;
+    text-align: start;
+    position: static;
+}
+.header scan{
+    padding-left: 10px;
+}
+.body {
+    width: 100%;
+    min-height: fit-content;
+    text-align: start;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    min-height: fit-content;
+    align-items: flex-end;
+    position: static;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+.listexisting {
+    min-height: 100vh;
+    background: #cccccc;
+    color: #fbfbfb;
+}
+
+.space {
+    padding-top: 50px;
+}
+
+.listexisting {
+    background: #cccccc;
+    color: #290e5f;
+
+}
+
+.list-group-it {
+    background: #cccccc;
+    color: #290e5f;
+    padding-bottom: 20px;
+    width: 100%;
+
+}
+
+.search {
+    position: fixed;
+    left: 50%; /* Center horizontally */
+    width: 50%;
+    transform: translateX(-50%); /* Center the element horizontally */
+    outline: none;
+    border: none;
+    height: 40px;
+    margin-top: 25px; /* Adjust the top margin as needed */
+    border-radius: 6px; /* Keep your existing border-radius */
+}
+
+
+
+.divsep:hover {
+    transform: scale(1.01);
+}
+
+.search:hover {
+    outline: solid blue 2px;
+}
+.progress{
+    width: 80%;
+    height: 5px;
+
+}
+.height{
+    height: 5px;
+}
+.small{
+    height: 100%;
+}
+.card{
+    color: #290e5f;
+    width: 90%;
+    padding: 10px;
+    padding-left: 20px;
+    border-radius: 10px;
+    margin: 2px;
+}
+.card p{
+    margin: 5px;
+}
+.card .card-footer{
+    margin-left: 10px;
+}
+.card:hover{
+    transform: scale(1.005);
+}
+.h5{
+    color:#290e5f;
+}
+.h6{
+    color: white;
+}
