@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import {
   Container,
@@ -29,18 +29,41 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
   },
   profileCard: {
-    display: "flex", // Display profile card horizontally
-    alignItems: "center", // Align items vertically in the center
+    display: "flex",
+    alignItems: "center",
     padding: theme.spacing(2),
     cursor: "pointer",
+    width: 200,
+    height: 100,
+    margin: theme.spacing(1),
   },
   profileCardContent: {
     marginLeft: theme.spacing(2),
+  },
+  messageContainer: {
+    padding: theme.spacing(2),
+  },
+  message: {
+    marginBottom: theme.spacing(1),
   },
 }));
 
 export default function Review() {
   const classes = useStyles();
+  const [selectedProfile, setSelectedProfile] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+
+  const handleProfileClick = (name) => {
+    setSelectedProfile(name);
+  };
+
+  const handleMessageSend = () => {
+    if (newMessage.trim() !== "") {
+      setMessages([...messages, newMessage]);
+      setNewMessage("");
+    }
+  };
 
   return (
     <Container className={classes.container} maxWidth="xl">
@@ -61,9 +84,9 @@ export default function Review() {
               />
               <div className={classes.scrollableContainer}>
                 <Typography variant="body1" component="div" className="mb-0">
-                  <ProfileCard name="Activity 1" />
-                  <ProfileCard name="Activity 2" />
-                  <ProfileCard name="Activity 3" />
+                  <ProfileCard name="Activity 1" onClick={handleProfileClick} />
+                  <ProfileCard name="Activity 2" onClick={handleProfileClick} />
+                  <ProfileCard name="Activity 3" onClick={handleProfileClick} />
                 </Typography>
               </div>
             </CardContent>
@@ -71,7 +94,13 @@ export default function Review() {
         </Grid>
         <Grid item md={6} lg={7} xl={8}>
           <Paper className={classes.scrollableContainer} variant="outlined">
-            {/* Your content goes here */}
+            <div className={classes.messageContainer}>
+              {messages.map((message, index) => (
+                <Typography key={index} className={classes.message}>
+                  {message}
+                </Typography>
+              ))}
+            </div>
           </Paper>
           <div className="text-muted d-flex justify-content-start align-items-center pe-3 pt-3 mt-2">
             <TextField
@@ -79,15 +108,17 @@ export default function Review() {
               placeholder="Type message"
               variant="outlined"
               size="large"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
             />
+            <IconButton onClick={handleMessageSend}>
+              <SendIcon />
+            </IconButton>
             <IconButton>
               <AttachmentIcon />
             </IconButton>
             <IconButton>
               <MoodIcon />
-            </IconButton>
-            <IconButton>
-              <SendIcon />
             </IconButton>
           </div>
         </Grid>
@@ -96,20 +127,16 @@ export default function Review() {
   );
 }
 
-function ProfileCard({ name }) {
+function ProfileCard({ name, onClick }) {
   const classes = useStyles();
 
   return (
-    <ButtonBase
-      className={classes.profileCard}
-      onClick={() => console.log(name)}
-    >
+    <ButtonBase className={classes.profileCard} onClick={() => onClick(name)}>
       <Card>
         <CardContent className={classes.profileCardContent}>
           <Typography variant="h6" component="div">
             {name}
           </Typography>
-          {/* Add more details if needed */}
         </CardContent>
       </Card>
     </ButtonBase>
