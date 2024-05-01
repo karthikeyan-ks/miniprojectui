@@ -1,30 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Fab } from '@mui/material';
 import { Add } from '@mui/icons-material';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { MyContext } from './Connection';
 
-class FloatingActionBar extends React.Component {
-    constructor(props) {
-        super(props);
-        // Bind the function to the component instance
-        this.goToHistoryPage = this.goToHistoryPage.bind(this);
+const FloatingActionBar=()=>{
+    const {setModal,modal}=useContext(MyContext)
+    const navigate=useNavigate()
+    const goToHistoryPage=()=> {
+        //this.props.navigateTo('/history');
+        //navigate("/history")
+        setModal(!modal)
+        console.log(modal)
     }
+    return (
+        <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
+            <Fab color="primary" aria-label="add" onClick={goToHistoryPage}>
+                <Add />
+            </Fab>
+        </div>
+    );
 
-    // Define the function inside the class
-    goToHistoryPage() {
-        // Use the navigateTo prop to navigate to the 'history' page
-        this.props.navigateTo('/history');
-    }
-
-    render() {
-        return (
-            <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
-                <Fab color="primary" aria-label="add" onClick={this.goToHistoryPage}>
-                    <Add />
-                </Fab>
-            </div>
-        );
-    }
+    
 }
 
 export default FloatingActionBar;

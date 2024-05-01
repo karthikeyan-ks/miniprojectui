@@ -1,76 +1,115 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
-import WebSocketComponent from './websocketClient';
-import { Card, CardHeader } from 'react-bootstrap';
+import { Card, CardHeader, Icon, IconButton } from '@mui/material';
+import { Box } from '@mui/material'
 import { Button, CardActions, CardContent, TextField, Typography } from '@mui/material';
+import { MyContext } from './components/Connection';
+import { Brightness1, Brightness4, Brightness7 } from '@mui/icons-material';
+import {Paper} from '@mui/material';
 
-const LoginPage = ({ onLogin, progress }) => {
-  const [userid, setUserId] = useState('');
+const LoginPage = ({preference }) => {
+  console.log(preference)
+  const [click,setClick]=useState(false)
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [message, setMessage] = useState({})
-  const navigate = useNavigate();
-  const handleMessageSocket = (message) => {
-    console.log('Login successful', message);
-    progress(100)
-    onLogin();
-    console.log("progress set to 100")
-    if (message["usename"] !== "None") {
-      localStorage.setItem("username", message['username'])
-      localStorage.setItem("userid", message['userid'])
-    } else {
-      setError("invalid username or password")
+  const navigate = useNavigate()
+  const { socket, response } = useContext(MyContext)
+  useEffect(() => {
+    if (socket != null) {
+      socket.onmessage = (msg) => {
+        console.log("in login page", msg.data)
+        localStorage.setItem('login', msg.data);
+        if (msg.data != null) {
+          let data = JSON.parse(msg.data)
+          if (data.user_id !== "None") {
+            if (data.usermode === "A")
+              navigate("/existing")
+          }else{
+            setError("enter a valid username and password")
+          }
+        }
+      }
     }
-  };
+    return () => {
+      if (socket) {
+        socket.onmessage = null;
+      }
+    }
+  }, [socket])
+
   const handleLogin = (event) => {
     if (username !== '' && password !== '') {
       console.log("click event working... ")
-      handleMessageSocket(1);
-      
-      console.log(message)
+      if (socket != null) {
+        socket.send(JSON.stringify(
+          {
+            'auth': 'auth',
+            'username': username,
+            'password': password
+          }
+        ))
+      } else {
+        console.log("socket is null...")
+      }
     } else {
       setError('Invalid username or password');
     }
   };
-  useEffect(() => {
-    if (message.username && message.password) {
-      console.log('Handling message:', message);
-    }
-  }, [message]);
 
   return (
-    <div className='container'>
-      <WebSocketComponent handleMessage={handleMessageSocket} message={message} />
-      <div className='form'>
-        <Card
-          sx={{ mb: 2, width: "90%", padding: "0px", margin: "5px" }}
-        >
-          <CardHeader
-            sx={{ color: "primary.black", height: "100%", margin: "1px", display: "flex", justifyContent: "center" }}
-            title={"login"}
+    <Box sx={{
+      width: "100vw",
+      height: "100vh",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      bgcolor: "primary"
+    }}>
+      <Card
+        sx={{ mb: 2, width: "40%", padding: "0px", margin: "5px" }}
+      >
+        <CardHeader
+          sx={{ color: "primary.black", height: "100%", margin: "1px", display: "flex", justifyContent: "center" }}
+          title={"Login"}
+          action={<IconButton 
+            onClick={(eve)=>{
+              setClick(!click)
+              preference()
+            }}
           >
-            <Typography variant='h3' sx={{textAlign:"center",color:"primary.dark"}}>login</Typography>
-          </CardHeader>
-          <CardContent sx={{padding:"20px"}}>
-            <TextField label="Enter the username" type='text' sx={{padding:"10px",width:"100%"}} value={username} onChange={(e) => setUsername(e.target.value)}>
+            {
+              click?(<Brightness4/>):(<Brightness7/>)
+            }
+          </IconButton>}
+        >
+          <Typography variant='h3' sx={{ alignItems: "center", width: "100%", color: "primary.dark" }}>login</Typography>
+        </CardHeader>
+        <CardContent sx={{ margin: "20px" }}>
+          <TextField label="Enter the username" type='text' sx={{ margin: "10px", width: "100%" }} value={username} onChange={(e) => setUsername(e.target.value)}>
 
-            </TextField>
-            <TextField label="Enter your password" type='password' sx={{padding:"10px",width:"100%"}} value={password} onChange={(e) => setPassword(e.target.value)}>
+          </TextField>
+          <TextField label="Enter your password" type='password' sx={{ margin: "10px", width: "100%" }} value={password} onChange={(e) => setPassword(e.target.value)}>
 
-            </TextField>
-          </CardContent>
-          <CardActions>
-            <Button onClick={handleLogin} sx={{ width: "100%", bgcolor: "primary.dark", color: "primary.white" }}>
-              LOGIN
-            </Button>
-          </CardActions>
-        </Card>
-       
-      </div>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-    </div>
+          </TextField>
+        </CardContent>
+        <CardActions>
+          <Button variant='contained' onClick={handleLogin} sx={{ width: "100%", bgcolor: "primary.dark", color: "primary.white" }}>
+            LOGIN
+          </Button>
+        </CardActions>
+        {error && <div style={{ color: 'red', textAlign: "center" }}>{error}
+          <IconButton>
+            <Icon>
+              <Brightness1/>
+            </Icon>
+          </IconButton>
+          </div>}
+      </Card>
+
+    </Box>
   );
 };
 

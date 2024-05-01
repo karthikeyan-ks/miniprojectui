@@ -31,8 +31,11 @@ const typoStyle = {
     margin:1
 }
 
-export default function BasicModal({ item,openModal }) {
-    const { modal, setModal ,Machineoptions,Componentoptions,ScheduleOptions,createActivity,response,Useroptions,searchUser,editActivity} = useContext(MyContext)
+export default function CreateModal() {
+    const [Machineoptions,setMachineOption]=useState([])
+    const [Componentoptions,setComponentOption]=useState([]);
+    const [ScheduleOptions,setScheduleOption]=useState([])
+    const {socket,modal,setModal} = useContext(MyContext)
     const [MachineValue, setMachineValue] = React.useState('');
     const [MachineInputValue, setMachineInputValue] = React.useState('');
     const [ComponentValue, setComponentValue] = React.useState('');
@@ -40,35 +43,75 @@ export default function BasicModal({ item,openModal }) {
     const [ScheduleValue, setScheduleValue] = React.useState('');
     const [ScheduleInputValue, setScheduleInputValue] = React.useState('');
     const [activityName,setActivityName]=useState('')
-    const [userInputValue,setUserInputValue]=useState('')
-    const [userValue,setUserValue]=useState('')
     const [activityDescrition,setActivityDescription]=useState('')
+    const handleClose=()=>{
+        setModal(!modal)
+    }
     useEffect(()=>{
-        console.log(Useroptions)
-    },[Useroptions])
-    useEffect(() => {
-        console.log(Machineoptions)
+        let intervalid=setInterval(()=>{
+            if(socket!=null){
+                if(socket.readyState===WebSocket.OPEN){
+                    clearInterval(intervalid)
+                    let user=localStorage.getItem('login')
+                    user['machine']='machine'
+                    socket.send(JSON.stringify(user))
+                    user=localStorage.getItem('login')
+                    user['component']='component'
+                    socket.send(JSON.stringify(user))
+                    user=localStorage.getItem('login')
+                    user['schedule']='schedule'
+                    socket.send(JSON.stringify(user))
+                    socket.onmessage=(msg)=>{
+                        console.log(msg.data)
+                    }
+    
+                }else if(socket.readyState===WebSocket.CONNECTING){
+    
+                }
+            }
+        });
         
-        setOpen(modal)
-    }, [modal])
+    },[])
+    const createActivity=(activity)=>{
+        socket.send(JSON.stringify(activity));
+        socket.onmessage=(msg)=>{
+            if(msg.data!=null){
+                console.log(msg.data)
+            }
+        }
+    }
     useEffect(()=>{
-        console.log("createActivity refledted")
-    },[Machineoptions])
-    useEffect(() => {
-        setOpen(modal)
-    }, [modal])
-
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    useEffect(() => {
-        setOpen(openModal)
-    }, [openModal])
-
+        let intervalid=setInterval(()=>{
+            if(socket!=null){
+                if(socket.readyState=== WebSocket.OPEN){
+                    clearInterval(intervalid)
+                    console.log("connected..");
+                    var data=JSON.parse(localStorage.getItem('login'))
+                    data['machine']='machine';
+                    socket.send(JSON.stringify(data))
+                    socket.onmessage=(msg)=>{
+                        if(msg.data!=null){
+                            console.log(msg.data)
+                            let data=JSON.parse(msg.data)
+                            
+                        }
+                    }
+                }else if(socket.readyState===WebSocket.CONNECTING){
+                    console.log("Connecting...")
+                }
+            }
+            return ()=>{
+                if(socket){
+                    socket.onmessage=null
+                    console.log("socket set to null...")
+                }
+            }
+        },1000)
+    },[socket])
     return (
         <div>
             <Modal
-                open={open}
+                open={modal}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
@@ -77,7 +120,7 @@ export default function BasicModal({ item,openModal }) {
                     <Typography
                         sx={{ display: "flex", justifyContent: "center", alignItems: "start" }}
                         id="modal-modal-title" variant="h6" component="h2">
-                        Edit Actiivty
+                        Create Actiivty
                     </Typography>
                     <TextField
                         value={activityName}
@@ -97,23 +140,6 @@ export default function BasicModal({ item,openModal }) {
                     label="enter the activity decription">
 
                     </TextField>
-                    <Autocomplete
-                        value={userValue}
-                        onChange={(event, newValue) => {
-                            console.log(newValue,"machine value")
-                            setUserValue(newValue)
-                        }}
-                        inputValue={userInputValue}
-                        onInputChange={(event, newInputValue) => {
-                            searchUser(newInputValue)
-                            setUserInputValue(newInputValue);
-                        }}
-                        id="controllable-component"
-                        options={Useroptions}
-                        getOptionLabel={(option) => option.username}
-                        sx={{ width: "100%",padding:2 }}
-                        renderInput={(params) => <TextField {...params} label="Select User" />}
-                    />
                     <Autocomplete
                         value={MachineValue}
                         onChange={(event, newValue) => {
@@ -166,25 +192,23 @@ export default function BasicModal({ item,openModal }) {
                     <Button
                      variant='outlined'
                      onClick={(eve)=>{
-                        console.log("clicked",item,userValue)
-                        editActivity({
+                        console.log("clicked")
+                        let user=JSON.parse(localStorage.getItem('login'))
+                        createActivity({
                             activity:{
-                                activity_id:item.activity_id,
                                 activity_name:activityName,
-                                assigned_to_user:userValue.username,
-                                activity_assigned_to:userValue.userid,
                                 activity_description:activityDescrition,
                                 activity_machine_id:MachineValue.id,
                                 activity_component_id:ComponentValue.id,
                                 activity_schedule_id:ScheduleValue.id,
                                 schedule_value:ScheduleValue.value
-                            },username:response.login['username'],
-                            password:response.login['password'],
-                            update:'update'
+                            },username:user['username'],
+                            password:user['password'],
+                            create:'create'
                         })
                      }}
                      >
-                        Edit Activity
+                        create Activity
                     </Button>
 
                 </Box>

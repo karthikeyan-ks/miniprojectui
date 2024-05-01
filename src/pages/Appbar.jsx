@@ -1,31 +1,37 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Tab, Tabs, TextField, IconButton, Menu, MenuItem } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useContext } from 'react';
+import { MyContext } from '../components/Connection';
+import { useState } from 'react';
 
-function Appbar({ navigateTo, progress }) {
+function Appbar({  progress }) {
+  const {response}=useContext(MyContext)
+  const [tab,setTab]=useState()
+  const navigateTo=useNavigate()
   const tabs = [
     {
       label: 'Existing',
       onclick: () => {
-        progress(100);
+        //progress(100);
         setTimeout(() => {
           console.log("navigating...");
           navigateTo('existing');
-          progress(0);
+          //progress(0);
         }, 1000);
       }
     },
     {
       label: 'Issued',
       onclick: () => {
-        progress(100);
+        //progress(100);
         setTimeout(() => {
           console.log("navigating...");
           navigateTo('issued');
-          progress(0);
+         // progress(0);
         }, 1000);
       }
     },
@@ -43,17 +49,18 @@ function Appbar({ navigateTo, progress }) {
     {
       label: 'Review',
       onclick: () => {
-        progress(100);
+        //progress(100);
         setTimeout(() => {
           console.log("navigating...");
           navigateTo('review');
-          progress(0);
+          //progress(0);
         }, 1000);
       }
     },
   ];
   const [selectedTab, setSelectedTab] = React.useState(0);
-
+  const login=JSON.parse(localStorage.getItem('login'));
+  console.log(login)
   const handleChange = (event, newIndex) => {
     setSelectedTab(newIndex);
   };
@@ -73,13 +80,14 @@ function Appbar({ navigateTo, progress }) {
         <Typography variant='p' noWrap component="div" sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
           Tranvancore Cements
         </Typography>
+        <Typography sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>Welcome {login['username']}</Typography>
         <Tabs value={selectedTab} onChange={handleChange}>
           {tabs.map((tab, index) => (
             <Tab
               key={tab.label}
               label={tab.label}
               onClick={() => {
-                progress(100);
+                //progress(100);
                 setSelectedTab(index);
                 tab.onclick();
               }}
@@ -87,6 +95,7 @@ function Appbar({ navigateTo, progress }) {
           ))}
         </Tabs>
         <div sx={{ display: 'flex', alignItems: 'center' }}>
+         
           <IconButton color="inherit" aria-label="Account" aria-haspopup="menu">
             <AccountCircleIcon />
           </IconButton>

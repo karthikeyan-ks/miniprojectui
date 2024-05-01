@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardActions, Typography, Menu, MenuItem } from "@mui/material";
 import "./History.css";
-import './App.css';
-import FloatingActionBar from "./components/FloatingActionBar";
-import ProgressBar from "./components/ProgressBar";
+import '../App.css';
+import FloatingActionBar from "../components/FloatingActionBar";
+import ProgressBar from "../components/ProgressBar";
 import { Icon, List, ListItem, Popper, Box, Fade, IconButton } from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import { ChangeCircle, Delete, MenuBook, MoreVert, Restore } from "@mui/icons-material";
-import BasicModal from "./components/Modal";
+import BasicModal from "../components/Modal";
 import { Link } from "react-router-dom";
 const navigateTo = (History) => {
     // Handle navigation using React Router

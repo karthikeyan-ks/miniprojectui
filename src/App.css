@@ -42,6 +42,7 @@ body{
 .container-fluid{
   position: relative;
   z-index: 2;
+  background-color: #ffc;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,5 +78,13 @@ body{
   width: 100%;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
+}
+.App-content{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
