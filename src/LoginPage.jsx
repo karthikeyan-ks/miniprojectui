@@ -15,7 +15,7 @@ const LoginPage = ({preference }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate()
-  const { socket, response } = useContext(MyContext)
+  const { socket,setSocket, response } = useContext(MyContext)
   useEffect(() => {
     if (socket != null) {
       socket.onmessage = (msg) => {
@@ -25,6 +25,7 @@ const LoginPage = ({preference }) => {
           let data = JSON.parse(msg.data)
           if (data.user_id !== "None") {
             if (data.usermode === "A")
+              setSocket(new WebSocket('ws://127.0.0.1:8000/chat/'+1+'/'))
               navigate("/existing")
           }else{
             setError("enter a valid username and password")
@@ -66,10 +67,10 @@ const LoginPage = ({preference }) => {
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      bgcolor: "primary"
     }}>
       <Card
-        sx={{ mb: 2, width: "40%", padding: "0px", margin: "5px" }}
+       
+        sx={{ mb: 2, width: "40%", padding: "0px", margin: "5px"}}
       >
         <CardHeader
           sx={{ color: "primary.black", height: "100%", margin: "1px", display: "flex", justifyContent: "center" }}
@@ -101,11 +102,6 @@ const LoginPage = ({preference }) => {
           </Button>
         </CardActions>
         {error && <div style={{ color: 'red', textAlign: "center" }}>{error}
-          <IconButton>
-            <Icon>
-              <Brightness1/>
-            </Icon>
-          </IconButton>
           </div>}
       </Card>
 

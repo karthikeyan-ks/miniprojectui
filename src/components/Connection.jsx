@@ -3,7 +3,7 @@ import { useState } from "react";
 export const MyContext = createContext()
 const MyProvider = ({ children }) => {
     const [Machineoptions,setMachineOption]=useState([])
-   
+    const [modal2,setModal2]=useState(false)
     const [Useroptions,setUserOption]=useState([])
     const [Componentoptions,setComponentOption]=useState([])
     const [ScheduleOptions,setScheduleOption]=useState([])
@@ -48,12 +48,13 @@ const MyProvider = ({ children }) => {
     useEffect(()=>{
         console.log("change in exisiting",response.existing)
     },[response])
-    const [socket, setSocket] = useState(null); // Track WebSocket state
+    const [socket, setSocket] = useState(null); 
     useEffect(()=>{
         console.log(Machineoptions)
     },[Machineoptions])
     useEffect(() => {
-        console.log("connection....");
+        let user_id=JSON.parse(localStorage['login']).user_id==null?"":JSON.parse(localStorage['login']).user_id
+        console.log("connection....",user_id);
         const newSocket = new WebSocket('ws://127.0.0.1:8000/chat/userid/');
         setSocket(newSocket)
         return () => {
@@ -72,54 +73,9 @@ const MyProvider = ({ children }) => {
         }
     }, [socket])
     return (
-        <MyContext.Provider value={{ response, setresponse, socket ,modal,setModal,handleMachine,Machineoptions,Componentoptions,handleComponents,handleSchedules,ScheduleOptions,createActivity,Useroptions,searchUser,editActivity}}>
+        <MyContext.Provider value={{ response,  socket,setSocket ,modal,setModal,Machineoptions,Componentoptions,ScheduleOptions,Useroptions,modal2,setModal2}}>   
             {children}
         </MyContext.Provider>
     );
 };
 export default MyProvider;
-/* socket.onmessage = (msg) => {
-                    let msgdata = JSON.parse(msg.data)
-                    console.log(msgdata)
-                    if (msgdata.activity_id != null && msgdata.actvity_status_id == 1) {
-                        console.log("called")
-                        setresponse((prevState) => ({
-                            ...prevState,
-                            existing: [...prevState.existing, msgdata], // Spread operator to create a new array
-                        }));
-                    }else if (msgdata.activity_id != null && msgdata.actvity_status_id == 2) {
-                        console.log("called")
-                        setresponse((prevState) => ({
-                            ...prevState,
-                            existing: [...prevState.existing, msgdata], // Spread operator to create a new array
-                        }));
-                    }else if (msgdata.activity_id != null && msgdata.actvity_status_id == 3) {
-                        console.log("called")
-                        setresponse((prevState) => ({
-                            ...prevState,
-                            existing: [...prevState.existing, msgdata], // Spread operator to create a new array
-                        }));
-                    }else if (msgdata.activity_id != null && msgdata.actvity_status_id == 4) {
-                        console.log("called")
-                        setresponse((prevState) => ({
-                            ...prevState,
-                            existing: [...prevState.existing, msgdata], // Spread operator to create a new array
-                        }));
-                    }else if(msgdata.id!=null && msgdata.actvity_status_id ==null && msgdata.type=="machine"){
-                        console.log("Machines are fetching...")
-                        setMachineOption((prev)=>[...prev,msgdata  ])
-                    }else if(msgdata.id!=null && msgdata.actvity_status_id ==null&& msgdata.type=="component"){
-                        console.log("Components are fetching...")
-                        setComponentOption((prev)=>[...prev,msgdata  ])
-                    }else if(msgdata.id!=null && msgdata.actvity_status_id ==null&& msgdata.type=="schedule"){
-                        console.log("Schedules are fetching...")
-                        setScheduleOption((prev)=>[...prev,msgdata  ])
-                    }else if(msgdata.callback!=null){
-                        console.log(msgdata.callback)
-                    }else if(msgdata.length!=null){
-                        console.log("user updating..")
-                        setUserOption(msgdata)
-                    }else{
-                        setresponse({...response,login:msgdata})
-                    }
-                }*/

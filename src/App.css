@@ -2,6 +2,7 @@
   text-align: center;
   background-color: #262b49;
   height: 100%;
+  width: 100%;
 }
 body{
   width: 100%;
@@ -11,10 +12,13 @@ body{
 #root{
   height: 100%;
 }
-
+.main{
+  width: 100%;
+}
 .App-header {
   background-color:  #2196f3;
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items:center;
   justify-content:center;
@@ -82,7 +86,7 @@ body{
 }
 .App-content{
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

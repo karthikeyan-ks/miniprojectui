@@ -1,66 +1,67 @@
 import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Tab, Tabs, TextField, IconButton, Menu, MenuItem } from '@mui/material';
+import { AppBar, Toolbar, Typography, Tab, Tabs, TextField, IconButton, Menu, MenuItem, Popover } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useContext } from 'react';
 import { MyContext } from '../components/Connection';
 import { useState } from 'react';
+import { Brightness4, Brightness7 } from '@mui/icons-material';
 
-function Appbar({  progress }) {
-  const {response}=useContext(MyContext)
-  const [tab,setTab]=useState()
-  const navigateTo=useNavigate()
+function Appbar({ preference }) {
+  const { response } = useContext(MyContext)
+  const [tab, setTab] = useState()
+  const [searchInput,setsearchInput]=useState('')
+  const [mode,setMode] = useState(false)
+  const navigateTo = useNavigate()
+  console.log(preference);
   const tabs = [
     {
       label: 'Existing',
       onclick: () => {
-        //progress(100);
         setTimeout(() => {
           console.log("navigating...");
           navigateTo('existing');
-          //progress(0);
         }, 1000);
       }
     },
     {
       label: 'Issued',
       onclick: () => {
-        //progress(100);
         setTimeout(() => {
           console.log("navigating...");
           navigateTo('issued');
-         // progress(0);
         }, 1000);
       }
     },
     {
       label: 'Pending',
       onclick: () => {
-        progress(100);
         setTimeout(() => {
           console.log("navigating...");
           navigateTo('pending');
-          progress(0);
         }, 1000);
       }
     },
     {
       label: 'Review',
       onclick: () => {
-        //progress(100);
         setTimeout(() => {
           console.log("navigating...");
           navigateTo('review');
-          //progress(0);
         }, 1000);
       }
     },
   ];
   const [selectedTab, setSelectedTab] = React.useState(0);
-  const login=JSON.parse(localStorage.getItem('login'));
+  const login = JSON.parse(localStorage.getItem('login'));
   console.log(login)
+  const handleMode=()=>{
+    setMode(!mode);
+    console.log("mode changed ..");
+    preference()
+  }
   const handleChange = (event, newIndex) => {
     setSelectedTab(newIndex);
   };
@@ -73,38 +74,69 @@ function Appbar({  progress }) {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  const handleSearchOpen = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
+  const handleSearchClose = () => {
+    setAnchorEl2(null);
+  };
 
   return (
     <AppBar position="relative">
-      <Toolbar>
-        <Typography variant='p' noWrap component="div" sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-          Tranvancore Cements
-        </Typography>
-        <Typography sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>Welcome {login['username']}</Typography>
-        <Tabs value={selectedTab} onChange={handleChange}>
+      <Toolbar sx={{ width: "100%", bgcolor: "secondary", display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+        <div style={{ width: "100%", display: 'flex', flexDirection: 'row' }}>
+          <Typography variant='p' noWrap component="div" sx={{ mr: 2, display: { xs: 'none', md: 'flex' , color:'#ff1'}}}>
+            Tranvancore Cements
+          </Typography>
+          <Typography sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>Welcome {login['username']}</Typography>
+
+        </div>
+        <Tabs textColor='secondary' sx={{ width: '100%',background:'secondary' }} indicatorColor='secondary' value={selectedTab} TabIndicatorProps={{
+          style: { color: 'secondary' }, 
+        }} onChange={handleChange}>
           {tabs.map((tab, index) => (
             <Tab
               key={tab.label}
               label={tab.label}
+              sx={{color:"white"}}
               onClick={() => {
-                //progress(100);
                 setSelectedTab(index);
                 tab.onclick();
               }}
             />
           ))}
         </Tabs>
-        <div sx={{ display: 'flex', alignItems: 'center' }}>
-         
-          <IconButton color="inherit" aria-label="Account" aria-haspopup="menu">
-            <AccountCircleIcon />
+
+        <div style={{ width: "fit-content", display: 'flex', flexDirection: 'row' }}>
+        <IconButton color="inherit" aria-label="Account" aria-haspopup="menu" onClick={handleMode}>
+            {mode?(<Brightness4/>):(<Brightness7/>)}
           </IconButton>
-          <IconButton color="inherit" aria-label="Search" aria-haspopup="menu" onClick={handleMenuOpen}>
-            <SearchIcon />
-          </IconButton>
-          <IconButton color="inherit" aria-label="more options" aria-haspopup="menu" onClick={handleMenuOpen}>
-            <MoreVertIcon />
-          </IconButton>
+          
+          <Popover
+            id='100'
+            anchorEl={anchorEl2}
+            anchorOrigin={{
+              vertical:'bottom',
+              horizontal:'center'
+            }}
+            sx={{borderRadius:"10px"}}
+            open={Boolean(anchorEl2)}
+            onClose={handleSearchClose}
+          >
+            <TextField
+              value={searchInput}
+              onChange={(eve)=>{
+                setsearchInput(eve.currentTarget.value)
+              }}
+              sx={{margin:1}}
+              label={"search Activities here"}
+            >
+
+            </TextField>
+          </Popover>
+          
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -122,11 +154,9 @@ function Appbar({  progress }) {
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
             <MenuItem onClick={() => {
-              progress(100);
               setTimeout(() => {
                 console.log("navigating...");
                 navigateTo('History');
-                progress(0);
               }, 1000);
             }}>History</MenuItem>
             <MenuItem onClick={handleMenuClose}>logout</MenuItem>
