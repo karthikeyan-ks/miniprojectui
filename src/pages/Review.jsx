@@ -9,24 +9,25 @@ import BasicModal from "../components/Modal";
 import { Link } from "react-router-dom";
 import { MyContext } from "../components/Connection";
 import CreateModal from "../components/CreateActivity";
+import { useNavigate } from "react-router-dom";
 const navigateTo = (History) => {
     console.log("Navigating to:", History);
 };
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap');
 </style>
 
 
 
-function Existing() {
+function Review() {
     const data = [
     ];
     const [Machineoptions, setMachineOption] = useState([])
     const [Componentoptions, setComponentOption] = useState([]);
     const [ScheduleOptions, setScheduleOption] = useState([])
     const [Useroptions, setUserOption] = useState([])
-
+    const navigate=useNavigate()
     const { socket, setModal } = useContext(MyContext)
     const [Item, setItem] = useState(null)
     useEffect(() => {
@@ -34,7 +35,7 @@ function Existing() {
             if (socket != null) {
                 if (socket.readyState === WebSocket.OPEN) {
                     clearInterval(intervalid)
-                    console.log("connected..",localStorage.getItem('login'));
+                    console.log("connected..", localStorage.getItem('login'));
                     var data = JSON.parse(localStorage.getItem('login'))
                     data['activity'] = 'activity';
                     socket.send(JSON.stringify(data))
@@ -42,7 +43,7 @@ function Existing() {
                         if (msg.data != null) {
                             console.log(msg.data)
                             let data = JSON.parse(msg.data)
-                            if (data.actvity_status_id == 1) {
+                            if (data.actvity_status_id == 4) {
                                 setDataList((prev) => [...prev, JSON.parse(msg.data)])
                                 setLoading(false)
                             }
@@ -63,10 +64,10 @@ function Existing() {
                                 setUserOption(data)
                             } else if (data.modal == 'Activity') {
                                 setModal((prev) => !prev)
-                            }else if(data.type!=null&& data.type=='send_database_client'){
+                            } else if (data.type != null && data.type == 'send_database_client') {
                                 appendActivity(data.message)
                             }
-                        }
+                        } 
                     }
                 } else if (socket.readyState === WebSocket.CONNECTING) {
                     console.log("Connecting...")
@@ -115,11 +116,11 @@ function Existing() {
         }
     };
     const appendActivity = (data) => {
-        console.log(data,datalist)
-        setDataList((prev) => [...prev.filter((item)=>item.activity_id!=data.activity_id),data])
+        console.log(data, datalist)
+        setDataList((prev) => [...prev.filter((item) => item.activity_id != data.activity_id), data])
     }
-    const RemoveActivity =(item)=>{
-        const filtered=datalist.filter((i)=>i.activity_name!=item.activity_name )
+    const RemoveActivity = (item) => {
+        const filtered = datalist.filter((i) => i.activity_name != item.activity_name)
         setDataList(filtered)
     }
     const handleMouseLeave = () => {
@@ -138,13 +139,17 @@ function Existing() {
         const dataView1 = datalist.map(item =>
             <Card variant="outlined"
                 key={item.id}
-
+                onClick={(eve)=>{
+                    console.log("item clicked",item)
+                    localStorage.setItem('item',item.activity_id)
+                    navigate('/report')
+                }}
                 sx={{ mb: 2, width: "90%", padding: "0px", margin: "5px", bgcolor: 'primary' }}
             >
                 <CardHeader
                     sx={{ width: "fit-content", height: "fit-content", width: "100%", padding: "5px", paddingLeft: '16px', margin: "1px", display: "flex", justifyContent: "space-between" }}
-                    title={<Typography variant="h6" component={"div"} sx={{ letterSpacing: "0.1rem",fontFamily:'Open sans' }}>{item.activity_name}</Typography>}
-                    subheader={<Typography variant="body2" sx={{ letterSpacing: "0.1rem", fontSize: "15px",fontFamily:'Open sans' }} fontFamily={'Roboto'} color="primary.black">
+                    title={<Typography variant="h6" component={"div"} sx={{ letterSpacing: "0.1rem", fontFamily: 'Open sans' }}>{item.activity_name}</Typography>}
+                    subheader={<Typography variant="body2" sx={{ letterSpacing: "0.1rem", fontSize: "15px", fontFamily: 'Open sans' }} fontFamily={'Roboto'} color="primary.black">
                         {item.activity_descrption}
                     </Typography>}
                     action={
@@ -187,22 +192,19 @@ function Existing() {
                 <CardActions sx={{ display: 'flex', justifyContent: 'flex-start', padding: 0, margin: 0 }}>
                     <List sx={{ display: "flex", flexDirection: "row", width: "100%", padding: 0, margin: 0 }}>
                         <ListItem sx={{ width: "100%", paddingLeft: 1, margin: 0 }}>
-                            <IconButton id="2" aria-label="delete" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                                <Delete />
-                            </IconButton>
                         </ListItem>
                         <ListItem sx={{ width: "100%", paddingLeft: 1, margin: 0 }}>
-                            <Typography sx={{ width: "100%", fontWeight: 'light', fontFamily: 'Poppin,"Schibsted Grotesk"',fontSize:'14px'  }}>
+                            <Typography sx={{ width: "100%", fontWeight: 'light', fontFamily: 'Poppin,"Schibsted Grotesk"', fontSize: '14px' }}>
                                 {Math.floor((new Date().getTime() - new Date(item.activity_last_reported).getTime()) / (1000 * 60 * 60 * 24))}/{item.schedule_value} days left
                             </Typography>
                         </ListItem>
                         <ListItem sx={{ width: "100%", paddingLeft: 1, margin: 0 }}>
-                            <Typography sx={{ width: "100%", fontWeight: 'light', fontFamily: 'Poppin,"Schibsted Grotesk"',fontSize:'14px' }}>
+                            <Typography sx={{ width: "100%", fontWeight: 'light', fontFamily: 'Poppin,"Schibsted Grotesk"', fontSize: '14px' }}>
                                 Assigned to: {item.assigned_to_user}
                             </Typography>
                         </ListItem>
                         <ListItem sx={{ width: "100%", paddingLeft: 1, margin: 0 }}>
-                            <Typography sx={{ width: "100%", fontWeight: 'light', fontFamily: 'Poppin,"Schibsted Grotesk"',fontSize:'14px'  }}>
+                            <Typography sx={{ width: "100%", fontWeight: 'light', fontFamily: 'Poppin,"Schibsted Grotesk"', fontSize: '14px' }}>
                                 Assigned by: {item.activity_creator}
                             </Typography>
                         </ListItem>
@@ -228,9 +230,7 @@ function Existing() {
         );
         setList(dataView1);
     }, [datalist, open, openModal]);
-
     const [list, setList] = useState([]);
-
     return (
         <Box sx={{
             bgcolor: 'primary',
@@ -244,22 +244,22 @@ function Existing() {
             <link rel="preconnect" href="https://fonts.googleapis.com"></link>
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
             <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet"></link>
-                    <h4 >Existing Activity</h4>
-                    {datalist.length == 0 ? "No Activity found" : null}
-                    {!loading ? list : (
-                        <Stack spacing={1} width={"100%"} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                            <Skeleton variant="circular" width={40} height={40} />
-                            <Skeleton variant="rectangular" height={100} sx={{ width: "90%" }} />
-                            <Skeleton variant="rounded" sx={{ width: "90%" }} />
-                        </Stack>
-                    )}
-                    <FloatingActionBar onClick={(eve) => {
-                        setModal((prev) => !prev)
-                    }} />
-                    <CreateModal appendActivity={appendActivity} Machineoptions={Machineoptions} Componentoptions={Componentoptions} ScheduleOptions={ScheduleOptions} />
-                    <BasicModal appendActivity={RemoveActivity} item={Item} setItem={setItem} Machineoptions={Machineoptions} Componentoptions={Componentoptions} ScheduleOptions={ScheduleOptions} Useroptions={Useroptions} />
-                </Box>
-                );
+            <h4 >Existing Activity</h4>
+            {datalist.length == 0 ? "No Activity found" : null}
+            {!loading ? list : (
+                <Stack spacing={1} width={"100%"} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+                    <Skeleton variant="circular" width={40} height={40} />
+                    <Skeleton variant="rectangular" height={100} sx={{ width: "90%" }} />
+                    <Skeleton variant="rounded" sx={{ width: "90%" }} />
+                </Stack>
+            )}
+            <FloatingActionBar onClick={(eve) => {
+                setModal((prev) => !prev)
+            }} />
+            <CreateModal appendActivity={appendActivity} Machineoptions={Machineoptions} Componentoptions={Componentoptions} ScheduleOptions={ScheduleOptions} />
+            <BasicModal appendActivity={RemoveActivity} item={Item} setItem={setItem} Machineoptions={Machineoptions} Componentoptions={Componentoptions} ScheduleOptions={ScheduleOptions} Useroptions={Useroptions} />
+        </Box>
+    );
 }
 
-                export default Existing;
+export default Review;
