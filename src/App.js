@@ -23,9 +23,9 @@ function App() {
         console.log("called for changing theme");
         setPreference(!prefernce)
         if(localStorage.getItem('mode')==null){
-            localStorage.setItem('light')
+            localStorage.setItem('mode','light')
             setPreference(false)
-        }
+        } 
         if(prefernce){
             localStorage.setItem('mode','dark')
         }else{
@@ -42,34 +42,42 @@ function App() {
         
     },[prefernce,mode])
     const MyTheme = createTheme({
-        palette: {
-          mode: mode,   
-          primary: {
-            main: '#00004D',
-            ...(mode === 'dark' && {
-              light: '#333', 
-              contrastText: '#fff',
-            }),
-            title:"#ff1"
-          },
-          secondary: {
-            main: '#f11', 
-            ...(mode === 'dark' && {
-              light: '#ff5722', 
-              contrastText: '#000',
-            }),
-          },
-          background: {
-            paper: mode === 'dark' ? '#222' : '#fff', 
-            default: mode === 'dark' ? '#111' : '#eee', 
-            main: mode === 'dark' ? '#888' : '#f5f5f5', 
-          },
-          text: {
-            primary: mode === 'dark' ? '#fff' : '#000', 
-            secondary: mode === 'dark' ? '#ccc' : '#333', 
-          },
+      palette: {
+        mode: mode,
+        primary: {
+          main: '#00004D',
+          ...(mode === 'dark' && {
+            light: '#333',
+            contrastText: '#fff',
+          }),
+          title: "#ff1"
         },
-      });
+        secondary: {
+          main: '#f11',
+          ...(mode === 'dark' && {
+            light: '#ff5722',
+            contrastText: '#000',
+          }),
+        },
+        background: {
+          paper: mode === 'dark' ? '#222' : '#fff',
+          default: mode === 'dark' ? '#111' : '#eee',
+          main: mode === 'dark' ? '#888' : '#f5f5f5',
+        },
+        text: {
+          primary: mode === 'dark' ? '#fff' : '#000',
+          secondary: mode === 'dark' ? '#ccc' : '#333',
+        },
+        action: { // Add this block
+          active: mode === 'dark' ? '#fff' : '#000',
+          hover: mode === 'dark' ? '#333' : '#ddd',
+          selected: mode === 'dark' ? '#555' : '#ccc',
+          disabled: mode === 'dark' ? '#444' : '#bbb',
+          disabledBackground: mode === 'dark' ? '#222' : '#eee',
+        },
+      },
+    });
+    
     return (
     <ThemeProvider theme={MyTheme}>
         <CssBaseline/>
