@@ -53,7 +53,7 @@ const MyProvider = ({ children }) => {
         console.log(Machineoptions)
     },[Machineoptions])
     useEffect(() => {
-        let user_id=JSON.parse(localStorage['login']).user_id==null?"":JSON.parse(localStorage['login']).user_id
+        let user_id=JSON.parse(localStorage.getItem('login')) == null?"":JSON.parse(localStorage['login']).user_id
         console.log("connection....",user_id);
         const newSocket = new WebSocket('ws://127.0.0.1:8000/chat/userid/');
         setSocket(newSocket)
